@@ -28,5 +28,3 @@ Professor: *Cristiano Bonato Both*
 Instituição: *Unisinos*  
 Ano/Semestre: **2025/2**
 
-
-> 💬 *"Compreender o comportamento da BER é essencial para projetar enlaces digitais eficientes e robustos."*
