@@ -3,6 +3,8 @@ import numpy as np
 from message_source import MessageSource
 from bit_converter import BitConverter
 from hamming_codec import Hamming74Codec
+from modem import DigitalModulator
+
 
 class TestCommunicationBlocks(unittest.TestCase):
     """
@@ -65,7 +67,8 @@ class TestCommunicationBlocks(unittest.TestCase):
         bits_encoded = self.codec.encode(bits_src)
         
         if len(bits_encoded) > 10:
-            bits_encoded ^= 1
+            # Inverte apenas o bit na posição 5 (ou qualquer outra posição válida)
+            bits_encoded[5] ^= 1
         
         bits_decoded = self.codec.decode(bits_encoded)
         
@@ -73,5 +76,57 @@ class TestCommunicationBlocks(unittest.TestCase):
         
         self.assertEqual(msg, msg_final, "Falha na integração da cadeia completa com injeção de erro.")
 
+class TestModulation(unittest.TestCase):
+    
+    def setUp(self):
+        self.modem = DigitalModulator()
+
+    def test_bpsk_integrity(self):
+        """Verifica se BPSK modula e demodula perfeitamente sem ruído."""
+        bits_in = np.array([0, 1, 1, 0, 1, 0, 0, 1], dtype=np.uint8)
+        
+        # Modula
+        symbols = self.modem.modulate(bits_in, scheme='BPSK')
+        # Demodula (sem adicionar ruído)
+        bits_out = self.modem.demodulate(symbols, scheme='BPSK')
+        
+        np.testing.assert_array_equal(bits_in, bits_out, 
+            "Falha: BPSK sem ruído deveria retornar bits idênticos.")
+
+    def test_qpsk_integrity_even(self):
+        """Verifica QPSK com número PAR de bits."""
+        bits_in = np.array([0, 0, 0, 1, 1, 0, 1, 1], dtype=np.uint8) # 8 bits (4 símbolos)
+        
+        symbols = self.modem.modulate(bits_in, scheme='QPSK')
+        
+        # Verifica se gerou 4 símbolos
+        self.assertEqual(len(symbols), 4, "QPSK deveria gerar N/2 símbolos.")
+        
+        bits_out = self.modem.demodulate(symbols, scheme='QPSK')
+        np.testing.assert_array_equal(bits_in, bits_out, "Falha: QPSK (par) corrompido.")
+
+    def test_qpsk_integrity_odd(self):
+        """Verifica QPSK com número ÍMPAR de bits (teste de padding)."""
+        bits_in = np.array([1, 0, 1], dtype=np.uint8) # 3 bits -> precisa de padding para 4
+        
+        symbols = self.modem.modulate(bits_in, scheme='QPSK')
+        
+        # Devemos informar o tamanho original para cortar o padding na volta
+        bits_out = self.modem.demodulate(symbols, scheme='QPSK', original_length=len(bits_in))
+        
+        np.testing.assert_array_equal(bits_in, bits_out, 
+            "Falha: QPSK com bits ímpares (padding) não retornou corretamente.")
+
+    def test_noise_impact(self):
+        """Verifica se o ruído está realmente alterando os símbolos."""
+        bits = np.array([0, 1]*100, dtype=np.uint8)
+        symbols_clean = self.modem.modulate(bits, scheme='BPSK')
+        
+        # Adiciona ruído muito alto (SNR baixo)
+        symbols_noisy = self.modem.add_awgn_noise(symbols_clean, snr_db=0)
+        
+        # Verifica se os arrays são diferentes
+        are_equal = np.allclose(symbols_clean, symbols_noisy)
+        self.assertFalse(are_equal, "Falha: A função de ruído não alterou os símbolos.")
 if __name__ == '__main__':
     unittest.main(argv=['first-arg-is-ignored'], exit=False)

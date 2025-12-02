@@ -1,3 +1,4 @@
+import numpy as np
 class Hamming74Codec:
     """
     Implementação vetorizada do Codec Hamming(7,4) Sistemático.
@@ -5,17 +6,18 @@ class Hamming74Codec:
     def __init__(self):
         # Definição da Matriz Geradora
         self.G = np.array([
-            [1, 1, 0, 0],
-            [0, 1, 1, 0],
-            [1, 0, 1, 0],
-        ], dtype=np.uint8)
+            [1, 0, 0, 0, 0, 1, 1],
+            [0, 1, 0, 0, 1, 0, 1],
+            [0, 0, 1, 0, 1, 1, 0],
+            [0, 0, 0, 1, 1, 1, 1],], 
+            dtype=np.uint8)
         
         # Definição da Matriz de Verificação de Paridade
         self.H = np.array([
-            [1, 0, 1, 0, 1, 0, 0],
-            [0, 1, 0, 1, 0, 1, 0],
-            [0, 0, 1, 0, 1, 0, 1],]
-            , dtype=np.uint8)
+            [0, 1, 1, 1, 1, 0, 0],
+            [1, 0, 1, 1, 0, 1, 0],
+            [1, 1, 0, 1, 0, 0, 1]], 
+            dtype=np.uint8)
         
         # Construção do mapa de síndromes para correção rápida
         self.syndrome_map = self._build_syndrome_map()

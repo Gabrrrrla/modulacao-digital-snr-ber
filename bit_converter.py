@@ -1,3 +1,4 @@
+import numpy as np
 class BitConverter:
     """
     Converte entre representações de texto e bits vetorizados (NumPy Arrays).
