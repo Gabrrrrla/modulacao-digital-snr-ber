@@ -58,6 +58,26 @@ Frase utilizada: "Trabalho de redes" - ruído médio (SNR = 5dB)
 
 ---
 
+<img width="1599" height="905" alt="image" src="https://github.com/user-attachments/assets/b2c82aea-3d12-4969-9f25-78bab8fe117b" />
+
+#### 1. Diferencial + BPSK (BER: 0.0571)
+
+Neste primeiro cenário, observamos uma taxa de erro de bit de aproximadamente 5,71%. O gráfico de constelação à esquerda exibe dois agrupamentos de símbolos (um positivo e um negativo), característicos da modulação binária. No entanto, devido ao SNR baixo (5dB), as "nuvens" de pontos vermelhos estão bastante dispersas, aproximando-se perigosamente da linha central de decisão. A alta taxa de erro, apesar da robustez natural do BPSK, deve-se principalmente à propagação de erro inerente ao codificador Diferencial: quando o ruído faz o receptor errar a detecção de uma fase, essa falha corrompe a referência para o próximo bit, resultando frequentemente em pares de erros consecutivos. No domínio do tempo (lado direito), nota-se que a onda recebida (linha vermelha) frequentemente não alcança a amplitude total esperada, flutuando em zonas de incerteza.
+
+#### 2. Diferencial + 4-QAM (BER: 0.0643)
+
+Este cenário apresentou o pior desempenho do conjunto, com uma taxa de erro de 6,43%. A análise do diagrama de constelação revela o motivo: ao utilizar 4-QAM, dividimos a energia do sinal em quatro quadrantes. Com a presença de ruído intenso, a distância de segurança entre os símbolos diminui drasticamente em comparação ao BPSK. Visualmente, vemos pontos vermelhos invadindo quadrantes vizinhos, o que significa que o receptor confundiu não apenas a fase, mas também a quadratura do sinal. Somando a fragilidade do QAM em baixa potência com a propagação de erros do codificador Diferencial, a integridade da mensagem "Trabalho de Redes..." foi severamente comprometida, resultando na maior perda de informação entre os testes.
+
+#### 3. Manchester + BPSK (BER: 0.0250)
+
+Aqui observamos um salto qualitativo significativo, com a taxa de erro caindo para 2,50% (menos da metade do cenário 1). O gráfico no domínio do tempo à direita revela a característica fundamental desta melhoria: a densidade de transições duplicou. O código Manchester utiliza dois "chips" de sinal para representar um único bit de informação. Isso confere ao sistema um ganho de processamento estatístico, pois o receptor tem mais "sinal" para integrar e tomar uma decisão. Mesmo sob o mesmo ruído de 5dB, a estrutura do Manchester permitiu filtrar melhor as incertezas, provando ser muito mais resiliente que a codificação Diferencial para proteger a transmissão.
+
+#### 4. Manchester + 4-QAM (BER: 0.0179)
+
+Surpreendentemente, este foi o cenário com o melhor desempenho nesta amostra específica, atingindo uma taxa de erro de apenas 1,79%. O gráfico de constelação mostra que, embora os pontos estejam dispersos como no cenário 2, a lógica de decodificação do Manchester conseguiu corrigir a maioria das ambiguidades. Este resultado ilustra um "trade-off" (compromisso) interessante de engenharia: ao combinar o Manchester (que dobra a largura de banda necessária) com o 4-QAM (que reduz a largura de banda pela metade), o sistema operou na mesma velocidade de transmissão efetiva do cenário 1, mas com uma robustez muito superior. O código conseguiu limpar os erros que a modulação QAM normalmente cometeria sozinha, preservando quase totalmente a integridade da string "Trabalho de Redes...".
+
+---
+
 <img width="896" height="733" alt="image" src="https://github.com/user-attachments/assets/00e03d59-cf46-41dd-9530-36d77128b49e" /> 
 
 Nesta seção, apresentamos a curva de desempenho BER vs SNR. O gráfico compara as 4 cadeias de transmissão implementadas.
@@ -92,5 +112,6 @@ Por outro lado, a codificação diferencial aparece como a mais eficiente energe
 
 ---
 
+## Vídeo com Demonstração da Aplicação
 
-
+https://github.com/user-attachments/assets/6f01c3ad-6a61-40ae-8f9f-e6d72920dfb9
