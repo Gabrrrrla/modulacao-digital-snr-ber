@@ -15,7 +15,7 @@ O simulador oferece duas formas de interação:
 1.  **Simulação de gráfica:** Gera curvas de BER vs SNR para análise.
 2.  **Transmissão de texto:** permite enviar mensagens reais e observar como o ruído afeta a recepção.
 
-### Tecnologias Implementadas
+### Tecnologias implementadas
 * **Codificação de linha:**
     * *Diferencial (NRZ-I):* mudança de nível ocorre apenas quando o bit é 1.
     * *Manchester:* transição no meio do intervalo de bit, garantindo sincronismo de clock.
@@ -112,6 +112,6 @@ Por outro lado, a codificação diferencial aparece como a mais eficiente energe
 
 ---
 
-## Vídeo com Demonstração da Aplicação
+## Vídeo com demonstração da aplicação
 
 https://github.com/user-attachments/assets/6f01c3ad-6a61-40ae-8f9f-e6d72920dfb9
