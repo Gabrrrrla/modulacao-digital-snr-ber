@@ -3,6 +3,12 @@
 Este projeto implementa uma simulação completa de um sistema de comunicação digital em Python. 
 A ideia é percorrer todas as etapas essenciais da camada física, como a codificação de linha até a modulação, transmissão em canal ruidoso (AWGN), demodulação e decodificação, para no fim analisarmos como diferentes técnicas se comportam diante do ruído.
 
+Alunos: Gabriela Bley Rodrigues, Luisa Becker dos Santos e Pedro Lucas Erig Gerhardt.
+
+Professor: Cristiano Bonato Both.
+
+Ciências da Computação - UNISINOS
+
 ## 1. Funcionalidades
 
 O simulador oferece duas formas de interação:
