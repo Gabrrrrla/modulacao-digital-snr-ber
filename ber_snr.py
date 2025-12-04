@@ -5,7 +5,7 @@ from core import canal_awgn, mod_bpsk, mod_qam, encode_differential, encode_manc
 def executar_simulacao_grafica():    
     n_bits = 50000 
     bits_tx = np.random.randint(0, 2, n_bits)
-    snr_range = np.arange(-4, 14, 1)
+    snr_range = np.arange(-4, 14, 1)    
 
     ber_diff_bpsk, ber_diff_qam = [], []
     ber_manch_bpsk, ber_manch_qam = [], []

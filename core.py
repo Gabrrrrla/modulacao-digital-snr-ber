@@ -22,7 +22,6 @@ def bits_para_texto(bits):
                 chars.append('?') # Caractere inválido se houver muito erro
     return "".join(chars)
 
-# --- 1.2 Codificadores de Linha ---
 def encode_differential(bits):
     """NRZ-I: Inverte estado se 1, mantem se 0."""
     encoded = []
@@ -56,7 +55,6 @@ def decode_manchester(bits):
         else: decoded.append(0) # Erro de violação
     return np.array(decoded)
 
-# --- 1.3 Moduladores Digitais ---
 def mod_bpsk(bits):
     return 2 * bits - 1
 
@@ -64,7 +62,7 @@ def demod_bpsk(sinal):
     return (sinal.real > 0).astype(int)
 
 def mod_qam(bits):
-    if len(bits) % 2 != 0: bits = np.append(bits, 0) # Padding
+    if len(bits) % 2 != 0: bits = np.append(bits, 0) # Padding (bits impares)
     symbols = []
     for i in range(0, len(bits), 2):
         r = 1 if bits[i] == 0 else -1
@@ -80,7 +78,6 @@ def demod_qam(sinal):
         bits.append(0 if s.imag > 0 else 1)
     return np.array(bits)
 
-# --- 1.4 Canal (Ruído) e Métricas ---
 def canal_awgn(sinal, snr_db):
     potencia_sinal = np.mean(np.abs(sinal)**2)
     snr_lin = 10**(snr_db/10)
