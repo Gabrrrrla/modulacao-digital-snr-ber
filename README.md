@@ -112,5 +112,6 @@ Por outro lado, a codificação diferencial aparece como a mais eficiente energe
 
 ---
 
+## Vídeo com Demonstração da Aplicação
 
-
+https://github.com/user-attachments/assets/6f01c3ad-6a61-40ae-8f9f-e6d72920dfb9
