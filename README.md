@@ -61,7 +61,7 @@ Frase utilizada: "Trabalho de redes" - ruído médio (SNR = 5dB)
 <img width="896" height="733" alt="image" src="https://github.com/user-attachments/assets/00e03d59-cf46-41dd-9530-36d77128b49e" /> 
 
 Nesta seção, apresentamos a curva de desempenho BER vs SNR. O gráfico compara as 4 cadeias de transmissão implementadas.
-O gráfico mostra o desempenho das quatro cadeias de transmissão. Para isso, geramos 50 mil bits aleatórios usando `np.random.randint(0, 2)`.
+Para isso, geramos 50 mil bits aleatórios usando `np.random.randint(0, 2)`.
 Isso garante uma sequência imprevisível (probabilidades iguais de 0 e 1) e evita vieses do padrão de dados. É importante usar muitos bits porque:
 * Taxas de erro pequenas só aparecem com grandes volumes de dados;
 * Com poucos bits, um único erro aleatório distorce o resultado.
